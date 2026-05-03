@@ -1,11 +1,12 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getBlogPost, getAllBlogSlugs } from '@/lib/blog'
+import { getBlogPost, getAllBlogSlugs, blogPosts } from '@/lib/blog'
 import { Nav } from '@/components/nav'
 import { Footer } from '@/components/footer'
 import { AnimatedSection } from '@/components/animated-section'
 import { ScrollTracker } from '@/components/scroll-tracker'
+import { EmailCaptureForm } from '@/components/email-capture-form'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
@@ -19,15 +20,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params
   const post = getBlogPost(slug)
-  
+
   if (!post) {
-    return {
-      title: 'Post Not Found - Colloqate',
-    }
+    return { title: 'Dispatch Not Found — Colloqate' }
   }
 
   return {
-    title: `${post.title} - Colloqate`,
+    title: `${post.title} — Colloqate`,
     description: post.excerpt,
     openGraph: {
       title: post.title,
@@ -42,25 +41,34 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
   const post = getBlogPost(slug)
 
-  if (!post) {
-    notFound()
-  }
+  if (!post) notFound()
+
+  const next = blogPosts.find((p) => p.slug !== post.slug)
 
   return (
     <main className="min-h-screen bg-background">
       <ScrollTracker />
       <Nav />
-      
-      <article className="max-w-3xl mx-auto px-6 pt-20 pb-28">
+
+      <article className="max-w-3xl mx-auto px-6 lg:px-10 pt-40 pb-24">
         <AnimatedSection>
-          <Link 
-            href="/blog" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8 inline-block"
+          <Link
+            href="/blog"
+            className="text-xs uppercase tracking-[0.22em] text-muted-foreground hover:text-foreground transition-colors mb-12 inline-block"
           >
-            ← Back to Blog
+            ← All dispatches
           </Link>
-          
-          <div className="flex items-center gap-3 text-sm text-muted-foreground mb-6">
+
+          <div className="flex items-center gap-4 mb-8">
+            <span className="w-10 h-px bg-accent/70" />
+            <span className="eyebrow">Dispatch</span>
+          </div>
+
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05] mb-10 text-balance">
+            {post.title}
+          </h1>
+
+          <div className="flex items-center gap-4 text-xs uppercase tracking-[0.22em] text-muted-foreground mb-12">
             <time dateTime={post.publishedAt}>
               {new Date(post.publishedAt).toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -68,44 +76,49 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 day: 'numeric',
               })}
             </time>
-            <span>·</span>
+            <span className="opacity-40">/</span>
             <span>{post.readTime}</span>
           </div>
-          
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl mb-8 text-balance">
-            {post.title}
-          </h1>
-          
-          <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
+
+          <p className="text-xl md:text-2xl text-foreground font-serif leading-snug mb-12 text-balance">
             {post.excerpt}
           </p>
         </AnimatedSection>
-        
-        <AnimatedSection delay={0.2}>
-          <div 
-            className="prose prose-invert prose-lg max-w-none
-              prose-headings:font-serif prose-headings:font-normal
-              prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6
-              prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
-              prose-strong:text-foreground prose-strong:font-medium
-              prose-a:text-foreground prose-a:underline prose-a:underline-offset-4
-            "
+
+        <AnimatedSection delay={0.15}>
+          <div className="hairline mb-12" />
+          <div
+            className="blog-content"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </AnimatedSection>
-        
-        <AnimatedSection delay={0.4}>
-          <div className="mt-16 pt-8 border-t border-border">
-            <Link 
-              href="/blog"
-              className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
-            >
-              ← Read more insights
-            </Link>
+
+        <AnimatedSection delay={0.3}>
+          <div className="mt-20 p-8 lg:p-10 rounded-2xl border border-border bg-card">
+            <p className="eyebrow mb-4">Continue reading</p>
+            <p className="font-serif text-2xl md:text-3xl mb-6 leading-tight">
+              Want dispatches like this in your inbox?
+            </p>
+            <EmailCaptureForm location="blog_post" buttonLabel="Get Exclusive Insights" />
           </div>
         </AnimatedSection>
+
+        {next && (
+          <AnimatedSection delay={0.4}>
+            <Link
+              href={`/blog/${next.slug}`}
+              className="group mt-12 flex items-center justify-between gap-6 py-6 border-t border-border"
+            >
+              <div>
+                <p className="eyebrow mb-2">Next dispatch</p>
+                <p className="font-serif text-xl md:text-2xl leading-tight">{next.title}</p>
+              </div>
+              <span className="text-foreground/60 group-hover:text-accent transition-colors text-2xl">→</span>
+            </Link>
+          </AnimatedSection>
+        )}
       </article>
-      
+
       <Footer />
     </main>
   )

@@ -3,28 +3,56 @@
 import { motion } from 'framer-motion'
 import { AnimatedSection } from './animated-section'
 
-const statements = [
-  'Mindset is not motivation. It\'s direction.',
-  'If you think you\'re on the wrong path — you\'re right.',
-  'Stay average. Or prove you\'re not.',
+const principles = [
+  {
+    n: '01',
+    title: 'We don&apos;t teach.',
+    body: 'We compress. Time is the lever. Frameworks are the byproduct.',
+  },
+  {
+    n: '02',
+    title: 'We don&apos;t scale.',
+    body: 'Every cohort is curated. The room is the product.',
+  },
+  {
+    n: '03',
+    title: 'We don&apos;t advertise.',
+    body: 'We are reached, not announced. Membership is signal.',
+  },
 ]
 
 export function MindsetSection() {
   return (
-    <section className="py-28 bg-card">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="space-y-12">
-          {statements.map((statement, index) => (
-            <AnimatedSection key={index} delay={index * 0.15}>
+    <section className="relative py-32 md:py-40">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="max-w-3xl mb-20">
+          <AnimatedSection>
+            <div className="flex items-center gap-4 mb-8">
+              <span className="w-10 h-px bg-accent/70" />
+              <span className="eyebrow">Operating Principles</span>
+            </div>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
+            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-balance">
+              Three lines that<br />
+              <span className="italic text-muted-foreground">decide everything.</span>
+            </h2>
+          </AnimatedSection>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-px bg-border border border-border rounded-2xl overflow-hidden">
+          {principles.map((p, i) => (
+            <AnimatedSection key={p.n} delay={i * 0.1}>
               <motion.div
-                className="relative"
-                whileHover={{ x: 20 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ backgroundColor: 'var(--card)' }}
+                className="h-full bg-background p-10 lg:p-12 flex flex-col gap-8"
               >
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-foreground group-hover:h-full transition-all duration-300" />
-                <p className="font-serif text-2xl md:text-3xl lg:text-4xl text-foreground pl-6 border-l-2 border-border hover:border-foreground transition-colors">
-                  {statement}
-                </p>
+                <span className="eyebrow">{p.n}</span>
+                <h3
+                  className="font-serif text-3xl md:text-4xl tracking-tight"
+                  dangerouslySetInnerHTML={{ __html: p.title }}
+                />
+                <p className="text-muted-foreground leading-relaxed">{p.body}</p>
               </motion.div>
             </AnimatedSection>
           ))}

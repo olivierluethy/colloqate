@@ -18,14 +18,24 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Colloqate - Transform Your Future',
-  description: 'A private business institute for people who learn faster than systems. Intensity. Direction. Real transformation.',
-  keywords: ['business', 'education', 'transformation', 'learning', 'mastery'],
+  title: 'Colloqate — Access What Most People Will Never See',
+  description:
+    'A private institute for the few who refuse to waste another year. Trusted by 6,000+ individuals worldwide. By invitation.',
+  keywords: [
+    'private institute',
+    'exclusive access',
+    'fast-track learner',
+    'smart-track learner',
+    'quick-step integrator',
+    'colloqate',
+  ],
   openGraph: {
-    title: 'Colloqate - Transform Your Future',
-    description: 'A private business institute for people who learn faster than systems.',
+    title: 'Colloqate — Access What Most People Will Never See',
+    description:
+      'A private institute for the few who refuse to waste another year. By invitation only.',
     type: 'website',
   },
+  robots: { index: true, follow: true },
 }
 
 export const viewport: Viewport = {

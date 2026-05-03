@@ -5,25 +5,25 @@
 
 /* Dark mode only - Colloqate premium theme */
 :root {
-  --background: oklch(0.08 0.005 285);
-  --foreground: oklch(0.92 0 0);
-  --card: oklch(0.12 0.005 285);
-  --card-foreground: oklch(0.92 0 0);
-  --popover: oklch(0.12 0.005 285);
-  --popover-foreground: oklch(0.92 0 0);
-  --primary: oklch(0.98 0 0);
-  --primary-foreground: oklch(0.08 0.005 285);
-  --secondary: oklch(0.18 0.005 285);
-  --secondary-foreground: oklch(0.92 0 0);
-  --muted: oklch(0.18 0.005 285);
-  --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.75 0.15 45);
-  --accent-foreground: oklch(0.08 0.005 285);
+  --background: oklch(0.06 0.004 80);
+  --foreground: oklch(0.94 0.005 80);
+  --card: oklch(0.09 0.004 80);
+  --card-foreground: oklch(0.94 0.005 80);
+  --popover: oklch(0.09 0.004 80);
+  --popover-foreground: oklch(0.94 0.005 80);
+  --primary: oklch(0.97 0.01 80);
+  --primary-foreground: oklch(0.06 0.004 80);
+  --secondary: oklch(0.14 0.005 80);
+  --secondary-foreground: oklch(0.94 0.005 80);
+  --muted: oklch(0.14 0.005 80);
+  --muted-foreground: oklch(0.62 0.01 80);
+  --accent: oklch(0.82 0.09 85);
+  --accent-foreground: oklch(0.06 0.004 80);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.25 0.005 285);
-  --input: oklch(0.25 0.005 285);
-  --ring: oklch(0.5 0 0);
+  --border: oklch(0.2 0.005 80);
+  --input: oklch(0.2 0.005 80);
+  --ring: oklch(0.55 0.02 80);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -88,5 +88,95 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+
+@layer components {
+  .blog-content {
+    color: var(--muted-foreground);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+  }
+  .blog-content > p {
+    margin-bottom: 1.5rem;
+  }
+  .blog-content > p:first-child::first-letter {
+    font-family: var(--font-serif);
+    float: left;
+    font-size: 4rem;
+    line-height: 0.85;
+    padding-right: 0.5rem;
+    padding-top: 0.25rem;
+    color: var(--foreground);
+  }
+  .blog-content h2 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--foreground);
+    font-size: 1.75rem;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+  }
+  .blog-content strong {
+    color: var(--foreground);
+    font-weight: 500;
+  }
+  .blog-content em {
+    color: var(--foreground);
+    font-style: italic;
+  }
+  .blog-content a {
+    color: var(--foreground);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+  }
+  .blog-content a:hover {
+    text-decoration-thickness: 2px;
+  }
+  .blog-content blockquote {
+    border-left: 1px solid var(--accent);
+    padding-left: 1.5rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: var(--foreground);
+    margin: 2.5rem 0;
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+  }
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  .hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  }
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+    opacity: 0.6;
+    mix-blend-mode: overlay;
   }
 }

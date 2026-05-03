@@ -1,10 +1,13 @@
 import { Nav } from '@/components/nav'
 import { HeroSection } from '@/components/hero-section'
+import { ExclusivitySection } from '@/components/exclusivity-section'
 import { ImpactSection } from '@/components/impact-section'
 import { CourseSection } from '@/components/course-section'
-import { CollabSection } from '@/components/collab-section'
+import { EventsSection } from '@/components/events-section'
 import { TestimonialSection } from '@/components/testimonial-section'
 import { MindsetSection } from '@/components/mindset-section'
+import { InsightsSection } from '@/components/insights-section'
+import { CareersSection } from '@/components/careers-section'
 import { CTASection } from '@/components/cta-section'
 import { Footer } from '@/components/footer'
 import { ScrollTracker } from '@/components/scroll-tracker'
@@ -15,11 +18,14 @@ export default function HomePage() {
       <ScrollTracker />
       <Nav />
       <HeroSection />
+      <ExclusivitySection />
       <ImpactSection />
       <CourseSection />
-      <CollabSection />
+      <EventsSection />
       <TestimonialSection />
+      <InsightsSection />
       <MindsetSection />
+      <CareersSection />
       <CTASection />
       <Footer />
     </main>

@@ -35,3 +35,9 @@ export const trackBlogClick = (slug: string, title: string) => {
     blog_title: title,
   })
 }
+
+export const trackAccessRequest = (location: string) => {
+  trackEvent('access_request_submit', {
+    location,
+  })
+}

@@ -2,49 +2,61 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
 import { BlogPost } from '@/lib/blog'
 import { trackBlogClick } from '@/lib/analytics'
 
 interface BlogCardProps {
   post: BlogPost
+  index: number
 }
 
-export function BlogCard({ post }: BlogCardProps) {
+export function BlogCard({ post, index }: BlogCardProps) {
   return (
-    <Link 
+    <Link
       href={`/blog/${post.slug}`}
       onClick={() => trackBlogClick(post.slug, post.title)}
+      className="group block"
     >
       <motion.article
-        className="group p-6 rounded-2xl border border-border hover:border-muted-foreground transition-colors bg-card"
-        whileHover={{ x: 8 }}
-        transition={{ duration: 0.2 }}
+        whileHover="hover"
+        className="grid grid-cols-12 gap-6 py-10 border-b border-border"
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
-              <time dateTime={post.publishedAt}>
-                {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
-              <span>·</span>
-              <span>{post.readTime}</span>
-            </div>
-            
-            <h2 className="font-serif text-xl md:text-2xl mb-3 group-hover:text-foreground transition-colors">
-              {post.title}
-            </h2>
-            
-            <p className="text-muted-foreground line-clamp-2">
-              {post.excerpt}
-            </p>
-          </div>
-          
-          <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-foreground transition-colors mt-1 flex-shrink-0" />
+        <div className="col-span-12 md:col-span-1">
+          <span className="eyebrow">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+        </div>
+        <div className="col-span-12 md:col-span-7">
+          <motion.h2
+            className="font-serif text-2xl md:text-3xl lg:text-4xl tracking-tight leading-[1.1] text-balance"
+            variants={{ hover: { x: 6 } }}
+            transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+          >
+            {post.title}
+          </motion.h2>
+          <p className="mt-4 text-muted-foreground leading-relaxed max-w-xl">
+            {post.excerpt}
+          </p>
+        </div>
+        <div className="col-span-12 md:col-span-4 md:text-right md:pl-6">
+          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+            <time dateTime={post.publishedAt}>
+              {new Date(post.publishedAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+          </p>
+          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground mt-2">
+            {post.readTime}
+          </p>
+          <motion.span
+            className="inline-block mt-6 text-foreground/60 group-hover:text-accent transition-colors"
+            variants={{ hover: { x: 6 } }}
+          >
+            Read dispatch →
+          </motion.span>
         </div>
       </motion.article>
     </Link>

@@ -1,43 +1,46 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { trackButtonClick } from '@/lib/analytics'
 import { AnimatedSection } from './animated-section'
+import { EmailCaptureForm } from './email-capture-form'
 
 export function CTASection() {
   return (
-    <section className="py-32 text-center">
-      <div className="max-w-3xl mx-auto px-6">
+    <section className="relative py-40 md:py-56 overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 0%, rgba(120,90,40,0.22) 0%, transparent 60%)',
+          }}
+        />
+      </div>
+
+      <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center">
         <AnimatedSection>
-          <h2 className="font-serif text-4xl md:text-5xl mb-6 text-balance">
-            You already know if this is for you.
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <span className="w-10 h-px bg-accent/70" />
+            <span className="eyebrow">Final Note</span>
+            <span className="w-10 h-px bg-accent/70" />
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.1}>
+          <h2 className="font-serif text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.98] tracking-tight text-balance">
+            If you&apos;re still exploring,<br />
+            <span className="italic text-muted-foreground">you&apos;re already behind.</span>
           </h2>
         </AnimatedSection>
 
-        <AnimatedSection delay={0.2}>
-          <p className="text-lg text-muted-foreground mb-12 max-w-xl mx-auto">
-            Stop consuming. Start becoming.
+        <AnimatedSection delay={0.25}>
+          <p className="mt-12 max-w-xl mx-auto text-base md:text-lg text-muted-foreground leading-relaxed">
+            One application. One conversation. One decision that compresses the next decade.
           </p>
         </AnimatedSection>
 
         <AnimatedSection delay={0.4}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => trackButtonClick('request_access')}
-              className="px-10 py-4 rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity font-medium"
-            >
-              Request Access
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => trackButtonClick('start_now')}
-              className="px-10 py-4 rounded-full border border-border hover:bg-secondary transition-colors font-medium"
-            >
-              Start Now
-            </motion.button>
+          <div className="mt-14 max-w-xl mx-auto">
+            <EmailCaptureForm location="final_cta" buttonLabel="Request Access" align="center" />
           </div>
         </AnimatedSection>
       </div>
